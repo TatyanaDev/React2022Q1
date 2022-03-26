@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import SearchBar from './../../Components/Home/SearchBar';
 import Header from './../../Components/Shared/Header';
 
 export default class Home extends Component {
@@ -6,7 +7,7 @@ export default class Home extends Component {
     return (
       <>
         <Header />
-        Home
+        <SearchBar />
       </>
     );
   }

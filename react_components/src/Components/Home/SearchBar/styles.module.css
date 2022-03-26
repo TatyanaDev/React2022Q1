@@ -1,0 +1,35 @@
+.form {
+  justify-content: end;
+  display: flex;
+  margin: 10px;
+}
+
+.containerInput {
+  position: relative;
+  cursor: pointer;
+}
+
+.containerInput::after {
+  background: url("./../../../icon/search.svg") no-repeat;
+  background-size: cover;
+  position: absolute;
+  margin: auto 0;
+  margin-left: 10px;
+  height: 30px;
+  width: 30px;
+  content: "";
+  bottom: 0;
+  top: 0;
+}
+
+.input {
+  border: 3px solid #783fe8;
+  border-radius: 50px;
+  letter-spacing: 1px;
+  font-weight: bolder;
+  padding: 10px 40px;
+  color: #009176;
+  font-size: 20px;
+  cursor: pointer;
+  display: block;
+}
