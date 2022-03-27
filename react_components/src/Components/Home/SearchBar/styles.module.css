@@ -10,7 +10,7 @@
 }
 
 .containerInput::after {
-  background: url("./../../../icon/search.svg") no-repeat;
+  background: url("./../../../icons/search.svg") no-repeat;
   background-size: cover;
   position: absolute;
   margin: auto 0;
