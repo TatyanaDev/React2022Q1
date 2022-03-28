@@ -35,6 +35,7 @@ export default class SearchBar extends Component<unknown, InputState> {
       <form className={style.form}>
         <div className={style.containerInput}>
           <input
+            data-testid="input"
             type="text"
             value={this.state.value}
             onChange={this.handleInputChange}

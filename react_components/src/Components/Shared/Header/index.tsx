@@ -6,11 +6,16 @@ export default class Header extends Component {
   render() {
     return (
       <header className={style.header}>
-        <NavLink to="/" className={({ isActive }) => (isActive ? style.activeLink : style.link)}>
+        <NavLink
+          to="/"
+          data-testid="homeLink"
+          className={({ isActive }) => (isActive ? style.activeLink : style.link)}
+        >
           Home
         </NavLink>
         <NavLink
           to="/about_us"
+          data-testid="aboutLink"
           className={({ isActive }) => (isActive ? style.activeLink : style.link)}
         >
           About Us

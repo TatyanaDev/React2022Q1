@@ -5,7 +5,7 @@ import style from './styles.module.css';
 export default class NotFound extends Component {
   render() {
     return (
-      <div className={style.container}>
+      <div className={style.container} data-testid="notFoundPage">
         <div>
           <h1>Page not found</h1>
           <Link to="/" className={style.link}>

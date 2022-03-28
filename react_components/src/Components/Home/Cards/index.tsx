@@ -113,10 +113,10 @@ export default class Cards extends Component {
     return (
       <div className={style.container}>
         {userСards.map((userCard: UserCardState) => (
-          <div key={userCard.id} className={style.cardContainer}>
+          <div key={userCard.id} className={style.cardContainer} data-testid="userСards">
             <img src={userCard.photo} alt={userCard.name} className={style.photo} />
             <h1>{userCard.name}</h1>
-            <h2 className={style.username}>{userCard.username}</h2>
+            <h2 className={style.username}>Nickname: {userCard.username}</h2>
             <div className={style.contactContainer}>
               <a href={`mailto:${userCard.email}`} className={style.link}>
                 <img src={email} alt="email" />
