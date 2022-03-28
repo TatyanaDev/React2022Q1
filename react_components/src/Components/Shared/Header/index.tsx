@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Component } from 'react';
 import style from './styles.module.css';
 
@@ -6,12 +6,15 @@ export default class Header extends Component {
   render() {
     return (
       <header className={style.header}>
-        <Link to="/" className={style.link}>
+        <NavLink to="/" className={({ isActive }) => (isActive ? style.activeLink : style.link)}>
           Home
-        </Link>
-        <Link to="/about_us" className={style.link}>
+        </NavLink>
+        <NavLink
+          to="/about_us"
+          className={({ isActive }) => (isActive ? style.activeLink : style.link)}
+        >
           About Us
-        </Link>
+        </NavLink>
       </header>
     );
   }

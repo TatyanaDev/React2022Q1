@@ -3,7 +3,14 @@
   padding: 25px;
 }
 
+.activeLink,
 .link {
   margin-right: 10px;
+  padding: 5px 10px;
   color: #ffffff;
+}
+
+.activeLink {
+  border: 2px solid #ffffff;
+  border-radius: 50px;
 }
