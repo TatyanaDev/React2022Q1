@@ -94,15 +94,13 @@ describe('Cards', () => {
   it('User cards render', () => {
     render(<Cards />);
 
-    const userCards = screen.getAllByTestId('userСards');
-    expect(userCards.length).toBe(10);
+    expect(screen.getAllByTestId('userСards').length).toBe(10);
   });
 
   it('Card render', () => {
     render(<Cards />);
 
-    const allGenderTexts = screen.getAllByText(/Nickname:/i);
-    expect(allGenderTexts.length).toBe(10);
+    expect(screen.getAllByText(/Nickname:/i).length).toBe(10);
   });
 });
 
@@ -113,8 +111,8 @@ describe('Display text on pages', () => {
         <AboutUs />
       </BrowserRouter>
     );
-    const aboutUs = screen.getByText(/About Us/i);
-    expect(aboutUs).toBeInTheDocument();
+
+    expect(screen.getByText(/About Us/i)).toBeInTheDocument();
   });
 
   test('Text rendering on NotFound page', () => {
@@ -124,10 +122,8 @@ describe('Display text on pages', () => {
       </BrowserRouter>
     );
 
-    const pageNotFound = screen.getByText(/Page not found/i);
-    const backToTheMainPage = screen.getByText(/Back to the main page/i);
-    expect(pageNotFound).toBeInTheDocument();
-    expect(backToTheMainPage).toBeInTheDocument();
+    expect(screen.getByText(/Page not found/i)).toBeInTheDocument();
+    expect(screen.getByText(/Back to the main page/i)).toBeInTheDocument();
   });
 });
 
@@ -139,11 +135,9 @@ describe('Navigation', () => {
       </BrowserRouter>
     );
 
-    const homeLink = screen.getByTestId('homeLink');
-    const aboutLink = screen.getByTestId('aboutLink');
-    userEvent.click(aboutLink);
+    userEvent.click(screen.getByTestId('aboutLink'));
     expect(screen.getByTestId('aboutPage')).toBeInTheDocument();
-    userEvent.click(homeLink);
+    userEvent.click(screen.getByTestId('homeLink'));
     expect(screen.getByTestId('homePage')).toBeInTheDocument();
   });
 
@@ -165,8 +159,7 @@ test('NotFound page contains a link', () => {
     </BrowserRouter>
   );
 
-  const link = screen.getByRole('link');
-  expect(link).toBeInTheDocument();
+  expect(screen.getByRole('link')).toBeInTheDocument();
 });
 
 test('Input event', () => {
@@ -176,7 +169,6 @@ test('Input event', () => {
     </BrowserRouter>
   );
 
-  const input = screen.getByTestId('input');
-  fireEvent.input(input, { target: { value: 'test-value' } });
+  fireEvent.input(screen.getByTestId('input'), { target: { value: 'test-value' } });
   expect(screen.queryByTestId('input')).toContainHTML('test-value');
 });
