@@ -20,6 +20,12 @@ export default class Header extends Component {
         >
           About Us
         </NavLink>
+        <NavLink
+          to="/form"
+          className={({ isActive }) => (isActive ? style.activeLink : style.link)}
+        >
+          Form
+        </NavLink>
       </header>
     );
   }
