@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import Header from './../../Components/Shared/Header';
+import Cards from './../../Components/Form/Cards';
 import Form from './../../Components/Form/Form';
 
 export type CardState = {
@@ -32,7 +33,8 @@ export default class FormPage extends Component<unknown, PageState> {
     return (
       <>
         <Header />
-        <Form cards={this.state.cards} onSubmit={this.onSubmit} />
+        <Form onSubmit={this.onSubmit} />
+        <Cards cards={this.state.cards} />
       </>
     );
   }

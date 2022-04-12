@@ -16,7 +16,7 @@ type FormState = {
   isMessage: boolean;
 };
 
-type FormProps = { cards: CardState[]; onSubmit: (card: CardState) => void };
+type FormProps = { onSubmit: (card: CardState) => void };
 
 export default class Form extends Component<FormProps, FormState> {
   private form: RefObject<HTMLFormElement>;
