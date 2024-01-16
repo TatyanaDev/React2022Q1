@@ -14,7 +14,7 @@ type UserCardState = {
   website: string;
 };
 
-const userСards: UserCardState[] = [
+const userCards: UserCardState[] = [
   {
     id: 1,
     photo: 'https://avatars.dicebear.com/v2/avataaars/Leanne%20Graham.svg?mood[]=happy',
@@ -112,8 +112,8 @@ export default class Cards extends Component {
   render() {
     return (
       <div className={style.container}>
-        {userСards.map((userCard: UserCardState) => (
-          <div key={userCard.id} className={style.cardContainer} data-testid="userСards">
+        {userCards.map((userCard: UserCardState) => (
+          <div key={userCard.id} className={style.cardContainer} data-testid="userCards">
             <img src={userCard.photo} alt={userCard.name} className={style.photo} />
             <h1>{userCard.name}</h1>
             <h2 className={style.username}>Nickname: {userCard.username}</h2>

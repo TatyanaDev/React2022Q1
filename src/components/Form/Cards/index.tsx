@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { CardState } from './../../../Pages/Form';
+import { CardState } from './../../../pages/Form';
 
 type CardsProps = { cards: CardState[] };
 

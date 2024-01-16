@@ -1,6 +1,6 @@
 import { Component, FormEvent, createRef, RefObject } from 'react';
 import cn from 'classnames';
-import { CardState } from './../../../Pages/Form';
+import { CardState } from './../../../pages/Form';
 import style from './styles.module.css';
 
 type FormState = {

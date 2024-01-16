@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import { Component } from 'react';
-import NotFound from './Pages/NotFound';
-import AboutUs from './Pages/AboutUs';
-import Home from './Pages/Home';
-import Form from './Pages/Form';
+import NotFound from './pages/NotFound';
+import AboutUs from './pages/AboutUs';
+import Home from './pages/Home';
+import Form from './pages/Form';
 
 export default class App extends Component {
   render() {

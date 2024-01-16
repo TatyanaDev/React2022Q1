@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import Header from './../../Components/Shared/Header';
-import Cards from './../../Components/Form/Cards';
-import Form from './../../Components/Form/Form';
+import Header from './../../components/Shared/Header';
+import Cards from './../../components/Form/Cards';
+import Form from './../../components/Form/Form';
 
 export type CardState = {
   name: string;
@@ -15,11 +15,11 @@ export type CardState = {
   photo: string;
 };
 
-type PageState = {
+type pagestate = {
   cards: CardState[];
 };
 
-export default class FormPage extends Component<unknown, PageState> {
+export default class FormPage extends Component<unknown, pagestate> {
   constructor(props: unknown) {
     super(props);
     this.state = {

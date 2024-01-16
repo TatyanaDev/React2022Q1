@@ -2,16 +2,16 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import SearchBar from './Components/Home/SearchBar';
-import Header from './Components/Shared/Header';
-import Cards from './Components/Home/Cards';
+import SearchBar from './components/Home/SearchBar';
+import Header from './components/Shared/Header';
+import Cards from './components/Home/Cards';
 import { saveToStorage } from './storage';
-import NotFound from './Pages/NotFound';
-import AboutUs from './Pages/AboutUs';
-import Home from './Pages/Home';
+import NotFound from './pages/NotFound';
+import AboutUs from './pages/AboutUs';
+import Home from './pages/Home';
 import App from './App';
 
-describe('Page rendering', () => {
+describe('Rendering pages', () => {
   test('Home page render', () => {
     render(
       <BrowserRouter>
@@ -37,7 +37,7 @@ describe('Page rendering', () => {
   });
 });
 
-describe('Rendering Components', () => {
+describe('Rendering components', () => {
   test('App component render', () => {
     render(
       <BrowserRouter>
@@ -94,7 +94,7 @@ describe('Cards', () => {
   it('User cards render', () => {
     render(<Cards />);
 
-    expect(screen.getAllByTestId('userСards').length).toBe(10);
+    expect(screen.getAllByTestId('userCards').length).toBe(10);
   });
 
   it('Card render', () => {

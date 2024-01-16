@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import SearchBar from './../../Components/Home/SearchBar';
-import Header from './../../Components/Shared/Header';
-import Cards from './../../Components/Home/Cards';
+import SearchBar from './../../components/Home/SearchBar';
+import Header from './../../components/Shared/Header';
+import Cards from './../../components/Home/Cards';
 
 export default class Home extends Component<unknown> {
   render() {
