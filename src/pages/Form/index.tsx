@@ -1,25 +1,10 @@
 import { Component } from 'react';
-import Header from './../../components/Shared/Header';
-import Cards from './../../components/Form/Cards';
-import Form from './../../components/Form/Form';
+import Header from '../../components/shared/Header';
+import Cards from '../../components/form/Cards';
+import { Card, CardsProps } from '../../types';
+import Form from '../../components/form/Form';
 
-export type CardState = {
-  name: string;
-  surname: string;
-  birthday: string;
-  country: string;
-  gender: string;
-  personal: boolean;
-  mail: boolean;
-  call: boolean;
-  photo: string;
-};
-
-type pagestate = {
-  cards: CardState[];
-};
-
-export default class FormPage extends Component<unknown, pagestate> {
+export default class FormPage extends Component<unknown, CardsProps> {
   constructor(props: unknown) {
     super(props);
     this.state = {
@@ -27,7 +12,7 @@ export default class FormPage extends Component<unknown, pagestate> {
     };
   }
 
-  onSubmit = (card: CardState) => this.setState({ cards: [...this.state.cards, card] });
+  onSubmit = (card: Card) => this.setState({ cards: [...this.state.cards, card] });
 
   render() {
     return (

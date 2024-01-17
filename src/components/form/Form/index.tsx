@@ -1,22 +1,7 @@
 import { Component, FormEvent, createRef, RefObject } from 'react';
 import cn from 'classnames';
-import { CardState } from './../../../pages/Form';
+import { Card, FormState, FormProps } from '../../../types';
 import style from './styles.module.css';
-
-type FormState = {
-  isNameValid: boolean;
-  isSurnameValid: boolean;
-  isBirthdayValid: boolean;
-  isCountryValid: boolean;
-  isGenderValid: boolean;
-  isCheckboxValid: boolean;
-  isPhotoValid: boolean;
-  isActiveButton: boolean;
-  isSend: boolean;
-  isMessage: boolean;
-};
-
-type FormProps = { onSubmit: (card: CardState) => void };
 
 export default class Form extends Component<FormProps, FormState> {
   private form: RefObject<HTMLFormElement>;
@@ -59,7 +44,7 @@ export default class Form extends Component<FormProps, FormState> {
     this.photo = createRef<HTMLInputElement>();
   }
 
-  card: CardState = {
+  card: Card = {
     name: '',
     surname: '',
     birthday: '',
@@ -142,7 +127,7 @@ export default class Form extends Component<FormProps, FormState> {
     }
   };
 
-  checkboxValidation = (): boolean => {
+  checkboxesValidation = (): boolean => {
     if (
       this.personal.current?.checked &&
       this.mail.current?.checked &&
@@ -197,12 +182,6 @@ export default class Form extends Component<FormProps, FormState> {
     }
   };
 
-  // helperValidation = (forValidation: () => boolean): void => {
-  //   if (this.state.isSend) {
-  //     forValidation();
-  //   }
-  // };
-
   helperNameValidation = (): void => {
     if (this.state.isSend) {
       this.nameValidation();
@@ -235,7 +214,7 @@ export default class Form extends Component<FormProps, FormState> {
 
   helperCheckboxValidation = (): void => {
     if (this.state.isSend) {
-      this.checkboxValidation();
+      this.checkboxesValidation();
     }
   };
 
@@ -262,7 +241,7 @@ export default class Form extends Component<FormProps, FormState> {
 
     const gender = this.genderValidation();
 
-    const checkbox = this.checkboxValidation();
+    const checkbox = this.checkboxesValidation();
 
     const photo = this.photoValidation();
 
@@ -282,10 +261,11 @@ export default class Form extends Component<FormProps, FormState> {
       <div className={style.formContainer}>
         <div>
           {this.state.isMessage && <div className={style.message}>Data saved successfully</div>}
+
           <form onSubmit={this.handleSubmit} ref={this.form} className={style.form}>
             <div className={style.inputsContainer}>
               <div className={style.inputContainer}>
-                <label htmlFor="name">Name : </label>
+                <label htmlFor="name">Name:</label>
                 <input
                   type="text"
                   name="name"
@@ -293,18 +273,18 @@ export default class Form extends Component<FormProps, FormState> {
                   onChange={this.helperNameValidation}
                   onFocus={this.activeButton}
                   className={cn(style.input, style.nameInput)}
-                  style={{ minWidth: 240 }}
                 />
+
                 {this.state.isNameValid && (
-                  <div className={style.error}>
+                  <p className={style.error}>
                     Enter your name. Must start with a capital letter and contain at least three
                     characters
-                  </div>
+                  </p>
                 )}
               </div>
 
               <div className={style.inputContainer}>
-                <label htmlFor="surname">Surname :</label>
+                <label htmlFor="surname">Surname:</label>
                 <input
                   type="text"
                   name="surname"
@@ -312,18 +292,18 @@ export default class Form extends Component<FormProps, FormState> {
                   onChange={this.helperSurnameValidation}
                   onFocus={this.activeButton}
                   className={cn(style.input, style.surnameInput)}
-                  style={{ minWidth: 215 }}
                 />
+
                 {this.state.isSurnameValid && (
-                  <div className={style.error}>
+                  <p className={style.error}>
                     Enter your surname. Must start with a capital letter and contain at least three
                     characters
-                  </div>
+                  </p>
                 )}
               </div>
 
               <div className={style.inputContainer}>
-                <label htmlFor="birthday">Date of birth : </label>
+                <label htmlFor="birthday">Date of birth:</label>
                 <input
                   type="date"
                   name="birthday"
@@ -332,15 +312,16 @@ export default class Form extends Component<FormProps, FormState> {
                   onFocus={this.activeButton}
                   className={cn(style.input, style.dateInput)}
                 />
+
                 {this.state.isBirthdayValid && (
-                  <div className={style.error}>
+                  <p className={style.error}>
                     Enter your date of birth. The date must be no later than the current
-                  </div>
+                  </p>
                 )}
               </div>
 
               <div className={style.inputContainer}>
-                <label htmlFor="country">Сountry : </label>
+                <label htmlFor="country">Country:</label>
                 <select
                   name="country"
                   defaultValue={''}
@@ -348,24 +329,22 @@ export default class Form extends Component<FormProps, FormState> {
                   onChange={this.helperCountryValidation}
                   onFocus={this.activeButton}
                   className={cn(style.input, style.countryInput)}
-                  style={{ minWidth: 223 }}
                 >
                   <option value="" disabled hidden>
                     Choose the country
                   </option>
                   <option value="Ukraine">Ukraine</option>
-                  <option value="Russia">Russia</option>
-                  <option value="Belarus">Belarus</option>
+                  <option value="Poland">Poland</option>
+                  <option value="Germany">Germany</option>
                 </select>
-                {this.state.isCountryValid && (
-                  <div className={style.error}>Сhoose your country</div>
-                )}
+
+                {this.state.isCountryValid && <p className={style.error}>Choose your country</p>}
               </div>
             </div>
 
             <div className={style.inputsContainer}>
               <div className={style.radioInputsContainer}>
-                <label htmlFor="gender" style={{ marginRight: 50 }}>
+                <label htmlFor="gender" className={style.genderLabel}>
                   <input
                     type="radio"
                     value="Male"
@@ -373,8 +352,7 @@ export default class Form extends Component<FormProps, FormState> {
                     ref={this.male}
                     onChange={this.helperGenderValidation}
                     onFocus={this.activeButton}
-                    className={style.input}
-                    style={{ marginRight: 10 }}
+                    className={cn(style.input, style.genderInput)}
                   />
                   Male
                 </label>
@@ -386,15 +364,15 @@ export default class Form extends Component<FormProps, FormState> {
                     ref={this.female}
                     onChange={this.helperGenderValidation}
                     onFocus={this.activeButton}
-                    className={style.input}
-                    style={{ marginRight: 10 }}
+                    className={cn(style.input, style.genderInput)}
                   />
                   Female
                 </label>
-                {this.state.isGenderValid && <div className={style.error}>Choose your gender</div>}
+
+                {this.state.isGenderValid && <p className={style.error}>Choose your gender</p>}
               </div>
 
-              <div style={{ marginBottom: 45 }}>
+              <div className={style.checkboxContainer}>
                 <div className={style.selectionInputsContainer}>
                   <input
                     name="personal"
@@ -402,8 +380,7 @@ export default class Form extends Component<FormProps, FormState> {
                     ref={this.personal}
                     onChange={this.helperCheckboxValidation}
                     onFocus={this.activeButton}
-                    className={style.input}
-                    style={{ marginRight: 10 }}
+                    className={cn(style.input, style.checkboxInput)}
                   />
                   <label htmlFor="personal" className={style.labelCheckbox}>
                     Agree to data processing
@@ -417,8 +394,7 @@ export default class Form extends Component<FormProps, FormState> {
                     ref={this.mail}
                     onChange={this.helperCheckboxValidation}
                     onFocus={this.activeButton}
-                    className={style.input}
-                    style={{ marginRight: 10 }}
+                    className={cn(style.input, style.checkboxInput)}
                   />
                   <label htmlFor="mail" className={style.labelCheckbox}>
                     Send a copy by mail
@@ -432,20 +408,20 @@ export default class Form extends Component<FormProps, FormState> {
                     ref={this.call}
                     onChange={this.helperCheckboxValidation}
                     onFocus={this.activeButton}
-                    className={style.input}
-                    style={{ marginRight: 10 }}
+                    className={cn(style.input, style.checkboxInput)}
                   />
                   <label htmlFor="call" className={style.labelCheckbox}>
                     Call me back
                   </label>
+
                   {this.state.isCheckboxValid && (
-                    <div className={style.error}> Choose one or more options</div>
+                    <p className={style.error}> Choose one or more options</p>
                   )}
                 </div>
               </div>
 
               <div className={style.inputContainer}>
-                <span>Photo :</span>
+                <span>Photo:</span>
                 <input
                   name="photo"
                   type="file"
@@ -454,7 +430,8 @@ export default class Form extends Component<FormProps, FormState> {
                   onFocus={this.activeButton}
                   className={style.photoInput}
                 />
-                {this.state.isPhotoValid && <div className={style.error}>Upload your photo</div>}
+
+                {this.state.isPhotoValid && <p className={style.error}>Upload your photo</p>}
               </div>
 
               <button

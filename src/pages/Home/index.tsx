@@ -1,9 +1,9 @@
 import { Component } from 'react';
-import SearchBar from './../../components/Home/SearchBar';
-import Header from './../../components/Shared/Header';
-import Cards from './../../components/Home/Cards';
+import SearchBar from '../../components/home/SearchBar';
+import Header from '../../components/shared/Header';
+import Cards from '../../components/home/Cards';
 
-export default class Home extends Component<unknown> {
+export default class Home extends Component {
   render() {
     return (
       <div data-testid="homePage">

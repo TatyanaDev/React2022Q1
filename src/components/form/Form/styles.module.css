@@ -1,21 +1,21 @@
 .formContainer {
   justify-content: center;
+  position: relative;
   font-weight: bold;
   display: flex;
 }
 
 .message {
-  box-shadow: 10px 10px 50px 0px #008000;
+  box-shadow: 10px 10px 50px 0px rgba(0, 0, 0, 0.3);
   background-color: #008000;
   letter-spacing: 0.5px;
+  margin: 20px auto 0;
   position: absolute;
   color: #ffffff;
   max-width: 400px;
   min-width: 350px;
-  margin: 0 auto;
-  margin-top: 20px;
   padding: 8px;
-  left: 1200px;
+  right: 10px;
 }
 
 .form {
@@ -46,6 +46,23 @@
   border: none;
 }
 
+.nameInput {
+  min-width: 240px;
+}
+
+.surnameInput {
+  min-width: 215px;
+}
+
+.countryInput {
+  min-width: 223px;
+}
+
+.genderInput,
+.checkboxInput {
+  margin-right: 10px;
+}
+
 .error {
   background-color: #ffb3b3;
   border: 1px solid #ff0000;
@@ -63,26 +80,37 @@
   top: 25px;
 }
 
-.radioInputsContainer {
-  margin-bottom: 45px;
+.radioInputsContainer,
+.selectionInputsContainer {
   position: relative;
 }
 
+.genderLabel {
+  margin-right: 50px;
+}
+
+.radioInputsContainer,
+.checkboxContainer {
+  margin-bottom: 45px;
+}
+
 .selectionInputsContainer {
-  position: relative;
   display: flex;
 }
 
 .button {
-  box-shadow: 10px 10px 50px 0px #008000;
+  box-shadow: 10px 10px 50px 0px rgba(0, 0, 0, 0.3);
   background-color: #008000;
   letter-spacing: 0.5px;
   font-weight: bold;
   color: #ffffff;
   min-width: 100%;
-  cursor: pointer;
   border: none;
   padding: 8px;
+}
+
+.button:not([disabled]) {
+  cursor: pointer;
 }
 
 .dateInput {

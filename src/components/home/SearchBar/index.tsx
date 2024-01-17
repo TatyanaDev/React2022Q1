@@ -1,11 +1,8 @@
 import { Component, ChangeEvent } from 'react';
+import { SearchBarState } from '../../../types';
 import style from './styles.module.css';
 
-type InputState = {
-  value: string;
-};
-
-export default class SearchBar extends Component<unknown, InputState> {
+export default class SearchBar extends Component<unknown, SearchBarState> {
   constructor(props: unknown) {
     super(props);
     this.state = {
@@ -15,11 +12,13 @@ export default class SearchBar extends Component<unknown, InputState> {
 
   componentDidMount(): void {
     const value: string = localStorage.getItem('inputValue') || '';
+
     this.setState({ value });
   }
 
   componentWillUnmount(): void {
     const { value } = this.state;
+
     localStorage.setItem('inputValue', value);
   }
 
@@ -27,6 +26,7 @@ export default class SearchBar extends Component<unknown, InputState> {
     const {
       target: { value },
     } = event;
+
     this.setState({ value });
   };
 

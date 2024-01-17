@@ -1,2 +1,2 @@
-# tatyana404-REACT2022Q1
+# tatyana404-React2022Q1
 Private repository for @tatyana404

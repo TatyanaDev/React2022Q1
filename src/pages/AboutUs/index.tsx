@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Header from './../../components/Shared/Header';
+import Header from '../../components/shared/Header';
 import style from './styles.module.css';
 
 export default class AboutUs extends Component {
@@ -7,7 +7,7 @@ export default class AboutUs extends Component {
     return (
       <div data-testid="aboutPage">
         <Header />
-        <h1 className={style.aboutUs}>AboutUs</h1>
+        <h1 className={style.aboutUs}>About_Us</h1>
       </div>
     );
   }

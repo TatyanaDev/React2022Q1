@@ -2,17 +2,41 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import SearchBar from './components/Home/SearchBar';
-import Header from './components/Shared/Header';
-import Cards from './components/Home/Cards';
-import { saveToStorage } from './storage';
+import SearchBar from './components/home/SearchBar';
+import FormComponent from './components/form/Form';
+import { saveToStorage } from './helper/storage';
+import Header from './components/shared/Header';
+import Cards from './components/home/Cards';
+import { LocalStorage } from './types';
 import NotFound from './pages/NotFound';
 import AboutUs from './pages/AboutUs';
+import FormPage from './pages/Form';
 import Home from './pages/Home';
 import App from './App';
 
+test('NotFound page contains a link', () => {
+  render(
+    <BrowserRouter>
+      <NotFound />
+    </BrowserRouter>
+  );
+
+  expect(screen.getByRole('link')).toBeInTheDocument();
+});
+
+test('Input event', () => {
+  render(
+    <BrowserRouter>
+      <SearchBar />
+    </BrowserRouter>
+  );
+
+  fireEvent.input(screen.getByTestId('input'), { target: { value: 'test-value' } });
+  expect(screen.queryByTestId('input')).toContainHTML('test-value');
+});
+
 describe('Rendering pages', () => {
-  test('Home page render', () => {
+  test('Home render', () => {
     render(
       <BrowserRouter>
         <Home />
@@ -20,7 +44,7 @@ describe('Rendering pages', () => {
     );
   });
 
-  test('AboutUs page render', () => {
+  test('AboutUs render', () => {
     render(
       <BrowserRouter>
         <AboutUs />
@@ -28,7 +52,15 @@ describe('Rendering pages', () => {
     );
   });
 
-  test('NotFound page render', () => {
+  test('Form render', () => {
+    render(
+      <BrowserRouter>
+        <FormPage />
+      </BrowserRouter>
+    );
+  });
+
+  test('NotFound render', () => {
     render(
       <BrowserRouter>
         <NotFound />
@@ -38,7 +70,7 @@ describe('Rendering pages', () => {
 });
 
 describe('Rendering components', () => {
-  test('App component render', () => {
+  test('App render', () => {
     render(
       <BrowserRouter>
         <App />
@@ -46,7 +78,7 @@ describe('Rendering components', () => {
     );
   });
 
-  test('Render component Header', () => {
+  test('Header render', () => {
     render(
       <BrowserRouter>
         <Header />
@@ -54,19 +86,21 @@ describe('Rendering components', () => {
     );
   });
 
-  test('Render component SearchBar', () => {
+  test('SearchBar render', () => {
     render(<SearchBar />);
   });
 
-  test('Render component Cards', () => {
+  test('Cards render', () => {
     render(<Cards />);
+  });
+
+  test('Form render', () => {
+    render(<FormComponent onSubmit={jest.fn()} />);
   });
 });
 
-type StorageState = { [key: string]: string };
-
 const fakeLocalStorage = (() => {
-  let store: StorageState = {};
+  let store: LocalStorage = {};
 
   return {
     getItem: (key: string) => store[key] || null,
@@ -105,17 +139,17 @@ describe('Cards', () => {
 });
 
 describe('Display text on pages', () => {
-  test('About Us Text Render', () => {
+  test('AboutUs text render', () => {
     render(
       <BrowserRouter>
         <AboutUs />
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/About Us/i)).toBeInTheDocument();
+    expect(screen.getByText(/About_Us/i)).toBeInTheDocument();
   });
 
-  test('Text rendering on NotFound page', () => {
+  test('NotFound text render', () => {
     render(
       <BrowserRouter>
         <NotFound />
@@ -150,25 +184,4 @@ describe('Navigation', () => {
 
     expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
   });
-});
-
-test('NotFound page contains a link', () => {
-  render(
-    <BrowserRouter>
-      <NotFound />
-    </BrowserRouter>
-  );
-
-  expect(screen.getByRole('link')).toBeInTheDocument();
-});
-
-test('Input event', () => {
-  render(
-    <BrowserRouter>
-      <SearchBar />
-    </BrowserRouter>
-  );
-
-  fireEvent.input(screen.getByTestId('input'), { target: { value: 'test-value' } });
-  expect(screen.queryByTestId('input')).toContainHTML('test-value');
 });
