@@ -1,0 +1,25 @@
+.container {
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.cardContainer {
+  background-color: #cdecfe;
+  border: 2px solid #27559c;
+  margin-bottom: 30px;
+  border-radius: 20px;
+  color: #27559c;
+  padding: 20px;
+  width: 340px;
+}
+
+.photo {
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 300px;
+}
+
+.bold {
+  font-weight: bold;
+}

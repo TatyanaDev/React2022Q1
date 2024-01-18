@@ -1,5 +1,6 @@
 .formContainer {
   justify-content: center;
+  margin-bottom: 30px;
   position: relative;
   font-weight: bold;
   display: flex;

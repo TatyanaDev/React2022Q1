@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Card, CardsProps } from '../../../types';
+import style from './styles.module.css';
 
 export default class Cards extends Component<CardsProps, unknown> {
   constructor(props: CardsProps) {
@@ -8,21 +9,42 @@ export default class Cards extends Component<CardsProps, unknown> {
 
   render() {
     return (
-      <div>
+      <div className={style.container}>
         {this.props.cards.map((card: Card, index: number) => (
-          <div key={index}>
-            <img src={card.photo} alt={card.name} />
-            <div>Name: {card.name}</div>
-            <div>Surname: {card.surname}</div>
-            <div>Date of birth: {card.birthday}</div>
-            <div>Country: {card.country}</div>
-            <div>Gender: {card.gender}</div>
-            <input name="personal" type="checkbox" checked={card.personal} readOnly />
-            <label htmlFor="personal">Agree to data processing</label>
-            <input name="mail" type="checkbox" checked={card.mail} readOnly />
-            <label htmlFor="mail">Send a copy by mail</label>
-            <input name="call" type="checkbox" checked={card.call} readOnly />
-            <label htmlFor="call">Call me back</label>
+          <div key={index} className={style.cardContainer}>
+            <img src={card.photo} alt={card.name} className={style.photo} />
+            <p>
+              <span className={style.bold}>Name:</span>&nbsp;{card.name}
+            </p>
+            <p>
+              <span className={style.bold}>Surname:</span>&nbsp;{card.surname}
+            </p>
+            <p>
+              <span className={style.bold}>Date of birth:</span>&nbsp;
+              {new Date(card.birthday).toLocaleDateString('ru-RU')}
+            </p>
+            <p>
+              <span className={style.bold}>Country:</span>&nbsp;{card.country}
+            </p>
+            <p>
+              <span className={style.bold}>Gender:</span>&nbsp;{card.gender}
+            </p>
+            &nbsp;
+            <div>
+              <input name="personal" type="checkbox" checked={card.personal} readOnly />
+              &nbsp;
+              <label htmlFor="personal">Agree to data processing</label>
+            </div>
+            <div>
+              <input name="mail" type="checkbox" checked={card.mail} readOnly />
+              &nbsp;
+              <label htmlFor="mail">Send a copy by mail</label>
+            </div>
+            <div>
+              <input name="call" type="checkbox" checked={card.call} readOnly />
+              &nbsp;
+              <label htmlFor="call">Call me back</label>
+            </div>
           </div>
         ))}
       </div>
