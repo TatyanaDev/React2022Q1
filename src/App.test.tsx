@@ -3,11 +3,12 @@ import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import SearchBar from './components/home/SearchBar';
+import UserCards from './components/home/UserCards';
 import FormComponent from './components/form/Form';
 import { saveToStorage } from './helper/storage';
 import Header from './components/shared/Header';
-import Cards from './components/home/Cards';
-import { LocalStorage } from './types';
+import { LocalStorage } from './interfaces';
+import Cards from './components/form/Cards';
 import NotFound from './pages/NotFound';
 import AboutUs from './pages/AboutUs';
 import FormPage from './pages/Form';
@@ -36,7 +37,7 @@ test('Input event', () => {
 });
 
 describe('Rendering pages', () => {
-  test('Home render', () => {
+  test('Home rendered', () => {
     render(
       <BrowserRouter>
         <Home />
@@ -44,7 +45,7 @@ describe('Rendering pages', () => {
     );
   });
 
-  test('AboutUs render', () => {
+  test('AboutUs rendered', () => {
     render(
       <BrowserRouter>
         <AboutUs />
@@ -52,7 +53,7 @@ describe('Rendering pages', () => {
     );
   });
 
-  test('Form render', () => {
+  test('Form rendered', () => {
     render(
       <BrowserRouter>
         <FormPage />
@@ -60,7 +61,7 @@ describe('Rendering pages', () => {
     );
   });
 
-  test('NotFound render', () => {
+  test('NotFound rendered', () => {
     render(
       <BrowserRouter>
         <NotFound />
@@ -70,7 +71,18 @@ describe('Rendering pages', () => {
 });
 
 describe('Rendering components', () => {
-  test('App render', () => {
+  const mockUser = (id: number) => ({
+    id,
+    name: '',
+    surname: '',
+    birthday: '',
+    country: '',
+    gender: '',
+    additionalInformation: { isAgree: false, isSendCopy: false, isCallBack: false },
+    photo: '',
+  });
+
+  test('App rendered', () => {
     render(
       <BrowserRouter>
         <App />
@@ -78,7 +90,7 @@ describe('Rendering components', () => {
     );
   });
 
-  test('Header render', () => {
+  test('Header rendered', () => {
     render(
       <BrowserRouter>
         <Header />
@@ -86,31 +98,56 @@ describe('Rendering components', () => {
     );
   });
 
-  test('SearchBar render', () => {
+  test('SearchBar rendered', () => {
     render(<SearchBar />);
   });
 
-  test('Cards render', () => {
-    render(<Cards />);
+  test('UserCards rendered in 10 pieces', () => {
+    render(<UserCards />);
+    expect(screen.getAllByTestId('userCards').length).toBe(10);
   });
 
-  test('Form render', () => {
-    render(<FormComponent onSubmit={jest.fn()} />);
+  test('Cards rendered', () => {
+    const mockUsers = [mockUser(0), mockUser(1)];
+
+    render(<Cards users={mockUsers} />);
+  });
+
+  test('Form rendered', () => {
+    const mockErrors = {
+      name: '',
+      surname: '',
+      birthday: '',
+      country: '',
+      gender: '',
+      additionalInformation: '',
+      photo: '',
+    };
+
+    render(
+      <FormComponent
+        user={mockUser(2)}
+        errors={mockErrors}
+        isMessage={false}
+        handleInputChange={jest.fn()}
+        handleSubmit={jest.fn()}
+      />
+    );
   });
 });
 
-const fakeLocalStorage = (() => {
-  let store: LocalStorage = {};
-
-  return {
-    getItem: (key: string) => store[key] || null,
-    setItem: (key: string, value: string) => (store[key] = value.toString()),
-    removeItem: (key: string) => delete store[key],
-    clear: () => (store = {}),
-  };
-})();
-
 describe('Storage', () => {
+  const fakeLocalStorage = (() => {
+    let store: LocalStorage = {};
+
+    return {
+      getItem: (key: string) => store[key] || null,
+      setItem: (key: string, value: string) => (store[key] = value.toString()),
+      removeItem: (key: string) => delete store[key],
+      clear: () => (store = {}),
+    };
+  })();
+
   beforeAll(() => {
     Object.defineProperty(window, 'localStorage', {
       value: fakeLocalStorage,
@@ -124,22 +161,13 @@ describe('Storage', () => {
   });
 });
 
-describe('Cards', () => {
-  it('User cards render', () => {
-    render(<Cards />);
-
-    expect(screen.getAllByTestId('userCards').length).toBe(10);
-  });
-
-  it('Card render', () => {
-    render(<Cards />);
-
+describe('Display text on pages', () => {
+  it('Nickname: on UserCards text rendered', () => {
+    render(<UserCards />);
     expect(screen.getAllByText(/Nickname:/i).length).toBe(10);
   });
-});
 
-describe('Display text on pages', () => {
-  test('AboutUs text render', () => {
+  test('About_Us text rendered', () => {
     render(
       <BrowserRouter>
         <AboutUs />
@@ -149,7 +177,7 @@ describe('Display text on pages', () => {
     expect(screen.getByText(/About_Us/i)).toBeInTheDocument();
   });
 
-  test('NotFound text render', () => {
+  test('NotFound text rendered', () => {
     render(
       <BrowserRouter>
         <NotFound />
@@ -162,7 +190,7 @@ describe('Display text on pages', () => {
 });
 
 describe('Navigation', () => {
-  test('Router', () => {
+  test('Router works', () => {
     render(
       <BrowserRouter>
         <App />
