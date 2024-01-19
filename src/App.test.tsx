@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 import SearchBar from './components/home/SearchBar';
 import UserCards from './components/home/UserCards';
 import FormComponent from './components/form/Form';
-import { saveToStorage } from './helper/storage';
+import { saveToStorage } from './helpers/storage';
 import Header from './components/shared/Header';
 import { LocalStorage } from './interfaces';
 import Cards from './components/form/Cards';

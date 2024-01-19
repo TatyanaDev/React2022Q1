@@ -1,5 +1,5 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
-import { validateField } from '../../helper/validation';
+import { validateField } from '../../helpers/validation';
 import Header from '../../components/shared/Header';
 import Cards from '../../components/form/Cards';
 import Form from '../../components/form/Form';
