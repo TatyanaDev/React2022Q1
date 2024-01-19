@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, LegacyRef } from 'react';
 
 export interface UserCard {
   id: number;
@@ -58,6 +58,7 @@ export interface FormProps extends Form {
     event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => void;
   handleSubmit: (event: FormEvent) => void;
+  photoInputRef: LegacyRef<HTMLInputElement> | undefined;
 }
 
 export interface FormState extends Form {

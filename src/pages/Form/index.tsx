@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, FormEvent } from 'react';
+import { ChangeEvent, Component, FormEvent, createRef } from 'react';
 import { validateField } from '../../helpers/validation';
 import Header from '../../components/shared/Header';
 import Cards from '../../components/form/Cards';
@@ -33,6 +33,8 @@ export default class FormPage extends Component<unknown, FormState> {
     };
   }
 
+  photoInputRef = createRef<HTMLInputElement>();
+
   handleInputChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const target = event.target as HTMLInputElement;
     const { name, value, type } = target;
@@ -59,6 +61,33 @@ export default class FormPage extends Component<unknown, FormState> {
           errors: {
             ...this.state.errors,
             additionalInformation: error,
+          },
+        });
+      case 'file':
+        const file = target.files && target.files[0];
+
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onloadend = () => {
+            newValue = reader.result;
+
+            error = validateField(name, newValue as string);
+
+            this.setState({
+              user: {
+                ...this.state.user,
+                [name]: newValue,
+              },
+            });
+          };
+          reader.readAsDataURL(file);
+        }
+
+        return this.setState({
+          errors: {
+            ...this.state.errors,
+            [name]: error,
           },
         });
       default:
@@ -119,6 +148,10 @@ export default class FormPage extends Component<unknown, FormState> {
         isMessage: true,
       }));
 
+      if (this.photoInputRef.current) {
+        this.photoInputRef.current.value = '';
+      }
+
       setTimeout(() => {
         this.setState({ isMessage: false });
       }, 2000);
@@ -135,6 +168,7 @@ export default class FormPage extends Component<unknown, FormState> {
           isMessage={this.state.isMessage}
           handleInputChange={this.handleInputChange}
           handleSubmit={this.handleSubmit}
+          photoInputRef={this.photoInputRef}
         />
         <Cards users={this.state.users} />
       </>

@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
+import { createRef } from 'react';
 import SearchBar from './components/home/SearchBar';
 import UserCards from './components/home/UserCards';
 import FormComponent from './components/form/Form';
@@ -114,6 +115,8 @@ describe('Rendering components', () => {
   });
 
   test('Form rendered', () => {
+    const photoInputRef = createRef<HTMLInputElement>();
+
     const mockErrors = {
       name: '',
       surname: '',
@@ -131,6 +134,7 @@ describe('Rendering components', () => {
         isMessage={false}
         handleInputChange={jest.fn()}
         handleSubmit={jest.fn()}
+        photoInputRef={photoInputRef}
       />
     );
   });

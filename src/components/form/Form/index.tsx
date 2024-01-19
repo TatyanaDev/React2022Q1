@@ -61,7 +61,7 @@ export default class Form extends Component<FormProps, unknown> {
                 <label htmlFor="country">Country:</label>
                 <select
                   name="country"
-                  defaultValue={''}
+                  value={user.country}
                   onChange={handleInputChange}
                   className={cn(style.input, style.countryInput)}
                 >
@@ -150,9 +150,9 @@ export default class Form extends Component<FormProps, unknown> {
                 <input
                   name="photo"
                   type="file"
-                  value={user.photo}
                   onChange={handleInputChange}
                   className={style.photoInput}
+                  ref={this.props.photoInputRef}
                 />
 
                 {errors.photo && <p className={style.error}>{errors.photo}</p>}
