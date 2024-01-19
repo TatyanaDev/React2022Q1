@@ -1,8 +1,8 @@
 import { ChangeEvent, Component, FormEvent, createRef } from 'react';
-import { validateField } from '../../helpers/validation';
 import Header from '../../components/shared/Header';
 import Cards from '../../components/form/Cards';
 import Form from '../../components/form/Form';
+import { validateField } from '../../helpers';
 import { FormState } from '../../interfaces';
 
 export default class FormPage extends Component<unknown, FormState> {

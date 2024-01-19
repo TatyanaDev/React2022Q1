@@ -1,9 +1,9 @@
 import { Component } from 'react';
-import { userCards } from '../../../constant/userCards';
 import website from './../../../icons/website.svg';
 import email from './../../../icons/email.svg';
 import phone from './../../../icons/phone.svg';
 import { UserCard } from '../../../interfaces';
+import { userCards } from '../../../constant';
 import style from './styles.module.css';
 
 export default class UserCards extends Component {
