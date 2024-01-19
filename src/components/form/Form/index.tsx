@@ -1,286 +1,34 @@
-import { Component, FormEvent, createRef, RefObject } from 'react';
+import { Component } from 'react';
 import cn from 'classnames';
-import { Card, FormState, FormProps } from '../../../types';
+import { FormProps } from '../../../interfaces';
 import style from './styles.module.css';
 
-export default class Form extends Component<FormProps, FormState> {
-  private form: RefObject<HTMLFormElement>;
-  private name: RefObject<HTMLInputElement>;
-  private surname: RefObject<HTMLInputElement>;
-  private birthday: RefObject<HTMLInputElement>;
-  private country: RefObject<HTMLSelectElement>;
-  private male: RefObject<HTMLInputElement>;
-  private female: RefObject<HTMLInputElement>;
-  private personal: RefObject<HTMLInputElement>;
-  private mail: RefObject<HTMLInputElement>;
-  private call: RefObject<HTMLInputElement>;
-  private photo: RefObject<HTMLInputElement>;
-
+export default class Form extends Component<FormProps, unknown> {
   constructor(props: FormProps) {
     super(props);
-    this.state = {
-      isNameValid: false,
-      isSurnameValid: false,
-      isBirthdayValid: false,
-      isCountryValid: false,
-      isGenderValid: false,
-      isCheckboxValid: false,
-      isPhotoValid: false,
-      isActiveButton: true,
-      isSend: false,
-      isMessage: false,
-    };
-
-    this.form = createRef<HTMLFormElement>();
-    this.name = createRef<HTMLInputElement>();
-    this.surname = createRef<HTMLInputElement>();
-    this.birthday = createRef<HTMLInputElement>();
-    this.country = createRef<HTMLSelectElement>();
-    this.male = createRef<HTMLInputElement>();
-    this.female = createRef<HTMLInputElement>();
-    this.personal = createRef<HTMLInputElement>();
-    this.mail = createRef<HTMLInputElement>();
-    this.call = createRef<HTMLInputElement>();
-    this.photo = createRef<HTMLInputElement>();
   }
 
-  card: Card = {
-    name: '',
-    surname: '',
-    birthday: '',
-    country: '',
-    gender: '',
-    personal: false,
-    mail: false,
-    call: false,
-    photo: '',
-  };
-
-  nameValidation = (): boolean => {
-    if (
-      !this.name.current?.value ||
-      this.name.current.value[0] !== this.name.current.value[0].toUpperCase() ||
-      this.name.current.value.length < 3
-    ) {
-      this.setState({ isNameValid: true });
-      return false;
-    } else {
-      this.setState({ isNameValid: false });
-      this.card.name = this.name.current.value;
-      return true;
-    }
-  };
-
-  surnameValidation = (): boolean => {
-    if (
-      !this.surname.current?.value ||
-      this.surname.current.value[0] !== this.surname.current.value[0].toUpperCase() ||
-      this.surname.current.value.length < 3
-    ) {
-      this.setState({ isSurnameValid: true });
-      return false;
-    } else {
-      this.setState({ isSurnameValid: false });
-      this.card.surname = this.surname.current.value;
-      return true;
-    }
-  };
-
-  birthdayValidation = (): boolean => {
-    if (
-      !this.birthday.current?.value ||
-      new Date(this.birthday.current.value) > new Date() ||
-      this.birthday.current.value.length < 1
-    ) {
-      this.setState({ isBirthdayValid: true });
-      return false;
-    } else {
-      this.setState({ isBirthdayValid: false });
-      this.card.birthday = this.birthday.current.value;
-      return true;
-    }
-  };
-
-  countryValidation = (): boolean => {
-    if (!this.country.current?.value) {
-      this.setState({ isCountryValid: true });
-      return false;
-    } else {
-      this.setState({ isCountryValid: false });
-      this.card.country = this.country.current.value;
-      return true;
-    }
-  };
-
-  genderValidation = (): boolean => {
-    if (this.male.current?.checked) {
-      this.setState({ isGenderValid: false });
-      this.card.gender = this.male.current.value;
-      return true;
-    } else if (this.female.current?.checked) {
-      this.setState({ isGenderValid: false });
-      this.card.gender = this.female.current.value;
-      return true;
-    } else {
-      this.setState({ isGenderValid: true });
-      return false;
-    }
-  };
-
-  checkboxesValidation = (): boolean => {
-    if (
-      this.personal.current?.checked &&
-      this.mail.current?.checked &&
-      this.call.current?.checked
-    ) {
-      this.setState({ isCheckboxValid: false });
-      this.card.personal = true;
-      this.card.mail = true;
-      this.card.call = true;
-      return true;
-    } else if (this.personal.current?.checked && this.mail.current?.checked) {
-      this.setState({ isCheckboxValid: false });
-      this.card.personal = true;
-      this.card.mail = true;
-      return true;
-    } else if (this.mail.current?.checked && this.call.current?.checked) {
-      this.setState({ isCheckboxValid: false });
-      this.card.mail = true;
-      this.card.call = true;
-      return true;
-    } else if (this.personal.current?.checked && this.call.current?.checked) {
-      this.setState({ isCheckboxValid: false });
-      this.card.personal = true;
-      this.card.call = true;
-      return true;
-    } else if (this.personal.current?.checked) {
-      this.setState({ isCheckboxValid: false });
-      this.card.personal = true;
-      return true;
-    } else if (this.mail.current?.checked) {
-      this.setState({ isCheckboxValid: false });
-      this.card.mail = true;
-      return true;
-    } else if (this.call.current?.checked) {
-      this.setState({ isCheckboxValid: false });
-      this.card.call = true;
-      return true;
-    } else {
-      this.setState({ isCheckboxValid: true });
-      return false;
-    }
-  };
-
-  photoValidation = (): boolean => {
-    if (!this.photo.current?.files?.length) {
-      this.setState({ isPhotoValid: true });
-      return false;
-    } else {
-      this.setState({ isPhotoValid: false });
-      this.card.photo = URL.createObjectURL(this.photo.current.files[0]);
-      return true;
-    }
-  };
-
-  helperNameValidation = (): void => {
-    if (this.state.isSend) {
-      this.nameValidation();
-    }
-  };
-
-  helperSurnameValidation = (): void => {
-    if (this.state.isSend) {
-      this.surnameValidation();
-    }
-  };
-
-  helperBirthdayValidation = (): void => {
-    if (this.state.isSend) {
-      this.birthdayValidation();
-    }
-  };
-
-  helperCountryValidation = (): void => {
-    if (this.state.isSend) {
-      this.countryValidation();
-    }
-  };
-
-  helperGenderValidation = (): void => {
-    if (this.state.isSend) {
-      this.genderValidation();
-    }
-  };
-
-  helperCheckboxValidation = (): void => {
-    if (this.state.isSend) {
-      this.checkboxesValidation();
-    }
-  };
-
-  helperPhotoValidation = (): void => {
-    if (this.state.isSend) {
-      this.photoValidation();
-    }
-  };
-
-  activeButton = (): void => this.setState({ isActiveButton: false });
-
-  handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-
-    this.setState({ isSend: true });
-
-    const name = this.nameValidation();
-
-    const surname = this.surnameValidation();
-
-    const birthday = this.birthdayValidation();
-
-    const country = this.countryValidation();
-
-    const gender = this.genderValidation();
-
-    const checkbox = this.checkboxesValidation();
-
-    const photo = this.photoValidation();
-
-    if (name && surname && birthday && country && gender && checkbox && photo) {
-      this.form.current?.reset();
-
-      this.props.onSubmit(this.card);
-
-      this.setState({ isMessage: true, isActiveButton: true });
-
-      setTimeout(() => this.setState({ isMessage: false }), 2000);
-    }
-  };
-
   render() {
+    const { user, errors, isMessage, handleInputChange, handleSubmit } = this.props;
+
     return (
       <div className={style.formContainer}>
         <div>
-          {this.state.isMessage && <div className={style.message}>Data saved successfully</div>}
+          {isMessage && <div className={style.message}>Data saved successfully</div>}
 
-          <form onSubmit={this.handleSubmit} ref={this.form} className={style.form}>
+          <form onSubmit={handleSubmit} className={style.form}>
             <div className={style.inputsContainer}>
               <div className={style.inputContainer}>
                 <label htmlFor="name">Name:</label>
                 <input
                   type="text"
                   name="name"
-                  ref={this.name}
-                  onChange={this.helperNameValidation}
-                  onFocus={this.activeButton}
+                  value={user.name}
+                  onChange={handleInputChange}
                   className={cn(style.input, style.nameInput)}
                 />
 
-                {this.state.isNameValid && (
-                  <p className={style.error}>
-                    Enter your name. Must start with a capital letter and contain at least three
-                    characters
-                  </p>
-                )}
+                {errors.name && <p className={style.error}>{errors.name}</p>}
               </div>
 
               <div className={style.inputContainer}>
@@ -288,18 +36,12 @@ export default class Form extends Component<FormProps, FormState> {
                 <input
                   type="text"
                   name="surname"
-                  ref={this.surname}
-                  onChange={this.helperSurnameValidation}
-                  onFocus={this.activeButton}
+                  value={user.surname}
+                  onChange={handleInputChange}
                   className={cn(style.input, style.surnameInput)}
                 />
 
-                {this.state.isSurnameValid && (
-                  <p className={style.error}>
-                    Enter your surname. Must start with a capital letter and contain at least three
-                    characters
-                  </p>
-                )}
+                {errors.surname && <p className={style.error}>{errors.surname}</p>}
               </div>
 
               <div className={style.inputContainer}>
@@ -307,17 +49,12 @@ export default class Form extends Component<FormProps, FormState> {
                 <input
                   type="date"
                   name="birthday"
-                  ref={this.birthday}
-                  onChange={this.helperBirthdayValidation}
-                  onFocus={this.activeButton}
+                  value={user.birthday}
+                  onChange={handleInputChange}
                   className={cn(style.input, style.dateInput)}
                 />
 
-                {this.state.isBirthdayValid && (
-                  <p className={style.error}>
-                    Enter your date of birth. The date must be no later than the current
-                  </p>
-                )}
+                {errors.birthday && <p className={style.error}>{errors.birthday}</p>}
               </div>
 
               <div className={style.inputContainer}>
@@ -325,9 +62,7 @@ export default class Form extends Component<FormProps, FormState> {
                 <select
                   name="country"
                   defaultValue={''}
-                  ref={this.country}
-                  onChange={this.helperCountryValidation}
-                  onFocus={this.activeButton}
+                  onChange={handleInputChange}
                   className={cn(style.input, style.countryInput)}
                 >
                   <option value="" disabled hidden>
@@ -338,7 +73,7 @@ export default class Form extends Component<FormProps, FormState> {
                   <option value="Germany">Germany</option>
                 </select>
 
-                {this.state.isCountryValid && <p className={style.error}>Choose your country</p>}
+                {errors.country && <p className={style.error}>{errors.country}</p>}
               </div>
             </div>
 
@@ -347,75 +82,65 @@ export default class Form extends Component<FormProps, FormState> {
                 <label htmlFor="gender" className={style.genderLabel}>
                   <input
                     type="radio"
-                    value="Male"
                     name="gender"
-                    ref={this.male}
-                    onChange={this.helperGenderValidation}
-                    onFocus={this.activeButton}
+                    value="Male"
+                    checked={user.gender === 'Male'}
+                    onChange={handleInputChange}
                     className={cn(style.input, style.genderInput)}
                   />
                   Male
                 </label>
+
                 <label htmlFor="gender">
                   <input
                     type="radio"
-                    value="Female"
                     name="gender"
-                    ref={this.female}
-                    onChange={this.helperGenderValidation}
-                    onFocus={this.activeButton}
+                    value="Female"
+                    checked={user.gender === 'Female'}
+                    onChange={handleInputChange}
                     className={cn(style.input, style.genderInput)}
                   />
                   Female
                 </label>
 
-                {this.state.isGenderValid && <p className={style.error}>Choose your gender</p>}
+                {errors.gender && <p className={style.error}>{errors.gender}</p>}
               </div>
 
               <div className={style.checkboxContainer}>
                 <div className={style.selectionInputsContainer}>
                   <input
-                    name="personal"
+                    name="isAgree"
                     type="checkbox"
-                    ref={this.personal}
-                    onChange={this.helperCheckboxValidation}
-                    onFocus={this.activeButton}
+                    checked={user.additionalInformation.isAgree}
+                    onChange={handleInputChange}
                     className={cn(style.input, style.checkboxInput)}
                   />
-                  <label htmlFor="personal" className={style.labelCheckbox}>
-                    Agree to data processing
-                  </label>
+                  <label htmlFor="isAgree">Agree to data processing</label>
                 </div>
 
                 <div className={style.selectionInputsContainer}>
                   <input
-                    name="mail"
+                    name="isSendCopy"
                     type="checkbox"
-                    ref={this.mail}
-                    onChange={this.helperCheckboxValidation}
-                    onFocus={this.activeButton}
+                    checked={user.additionalInformation.isSendCopy}
+                    onChange={handleInputChange}
                     className={cn(style.input, style.checkboxInput)}
                   />
-                  <label htmlFor="mail" className={style.labelCheckbox}>
-                    Send a copy by mail
-                  </label>
+                  <label htmlFor="isSendCopy">Send a copy by mail</label>
                 </div>
 
                 <div className={style.selectionInputsContainer}>
                   <input
-                    name="call"
+                    name="isCallBack"
                     type="checkbox"
-                    ref={this.call}
-                    onChange={this.helperCheckboxValidation}
-                    onFocus={this.activeButton}
+                    checked={user.additionalInformation.isCallBack}
+                    onChange={handleInputChange}
                     className={cn(style.input, style.checkboxInput)}
                   />
-                  <label htmlFor="call" className={style.labelCheckbox}>
-                    Call me back
-                  </label>
+                  <label htmlFor="isCallBack">Call me back</label>
 
-                  {this.state.isCheckboxValid && (
-                    <p className={style.error}> Choose one or more options</p>
+                  {errors.additionalInformation && (
+                    <p className={style.error}>{errors.additionalInformation}</p>
                   )}
                 </div>
               </div>
@@ -425,29 +150,15 @@ export default class Form extends Component<FormProps, FormState> {
                 <input
                   name="photo"
                   type="file"
-                  ref={this.photo}
-                  onChange={this.helperPhotoValidation}
-                  onFocus={this.activeButton}
+                  value={user.photo}
+                  onChange={handleInputChange}
                   className={style.photoInput}
                 />
 
-                {this.state.isPhotoValid && <p className={style.error}>Upload your photo</p>}
+                {errors.photo && <p className={style.error}>{errors.photo}</p>}
               </div>
 
-              <button
-                type="submit"
-                className={style.button}
-                disabled={
-                  this.state.isActiveButton ||
-                  this.state.isNameValid ||
-                  this.state.isSurnameValid ||
-                  this.state.isBirthdayValid ||
-                  this.state.isCountryValid ||
-                  this.state.isGenderValid ||
-                  this.state.isCheckboxValid ||
-                  this.state.isPhotoValid
-                }
-              >
+              <button type="submit" className={style.button}>
                 Create
               </button>
             </div>

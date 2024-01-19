@@ -3,10 +3,10 @@ import { userCards } from '../../../constant/userCards';
 import website from './../../../icons/website.svg';
 import email from './../../../icons/email.svg';
 import phone from './../../../icons/phone.svg';
-import { UserCard } from '../../../types';
+import { UserCard } from '../../../interfaces';
 import style from './styles.module.css';
 
-export default class Cards extends Component {
+export default class UserCards extends Component {
   render() {
     return (
       <div className={style.container}>

@@ -105,13 +105,10 @@
   letter-spacing: 0.5px;
   font-weight: bold;
   color: #ffffff;
+  cursor: pointer;
   min-width: 100%;
   border: none;
   padding: 8px;
-}
-
-.button:not([disabled]) {
-  cursor: pointer;
 }
 
 .dateInput {
