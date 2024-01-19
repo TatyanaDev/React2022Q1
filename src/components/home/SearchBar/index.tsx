@@ -1,5 +1,5 @@
 import { Component, ChangeEvent } from 'react';
-import { SearchBarState } from '../../../types';
+import { SearchBarState } from '../../../interfaces';
 import style from './styles.module.css';
 
 export default class SearchBar extends Component<unknown, SearchBarState> {

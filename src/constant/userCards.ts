@@ -8,7 +8,7 @@ import kurtisWeissnat from '../images/kurtis_weissnat.svg';
 import glennaReichert from '../images/glenna_reichert.svg';
 import leanneGraham from '../images/leanne_graham.svg';
 import ervinHowell from '../images/ervin_howell.svg';
-import { UserCard } from '../types';
+import { UserCard } from '../interfaces';
 
 export const userCards: UserCard[] = [
   {
